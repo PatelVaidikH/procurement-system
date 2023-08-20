@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommsLodge | User</title>
+
+  <!-- Jquery -->
+  <link rel="stylesheet" href="{% static 'plugins/jquery-ui/jquery-ui.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!--customecss-->
+  <link rel="stylesheet" href="{% static 'dist/css/customcss.css' %}">
+  <style>
+    textarea.form-control
+    {
+    resize:none;
+    }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+
+  <!-- Main Sidebar Container -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">{{name}}</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          {% include 'messages.html' %}
+            <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Room Participants</h3>
+                </div>
+                <div class="card-body">
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                  <div class="row">
+                  <div class="col-sm-12">
+                    <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
+                              <thead>
+                                <tr class="text-center">
+                                  <th class="sorting sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending">User Name</th>
+                                  <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Company Name</th>
+                                  <th>Remove User</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for data in table %}
+                                <tr class="odd">
+                                  <td class="dtr-control sorting_1" tabindex="0">{{data.name}}</td>
+                                  <td>{{data.cname}}</td>
+                                  <td class="text-center">
+                                    <form action="/editchatroom/" method="POST">
+                                      {% csrf_token %} 
+                                      <input type="hidden" name="userid" id="userid" value={{data.id}}> 
+                                    <button type="submit" class="btn btn-danger" formtarget="">
+                                        <i class="fas fa-trash"></i> 
+                                    </button>
+                                  </form>
+                                    <!-- Preloader -->
+  {% comment %} <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{% static 'dist/img/Commslodge(1).png' %}" alt="Commslodge" height="200" width="180">
+  </div> {% endcomment %}
+                                  </td>
+                                </tr>
+                                {% endfor %}
+
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <!-- select -->
+                          <form action="/chatroom1/" method="POST" id='useradd'>
+                            {% csrf_token %}
+                          <div class="form-group">
+                            <label>Choose user names to add</label>
+                            <div class="select2-purple">
+                            <select class="form-control select2bs4 .select2-purple" multiple aria-placeholder="Select users" name="username" id="useradd">
+                              {% for name in names %}
+                              <option>{{name}}</option>
+                              {% comment %} <option>Add  user 2</option>
+                              <option>Add  user 3</option>
+                              <option>Add  user 4</option> {% endcomment %}
+                              {% endfor %}
+                            </select>    
+                          </div>                  
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="text-center"><button type="submit" class="btn btn-block btn-dark ">Add</button></div>
+                        </div>
+                      </form>
+                    </div>
+                    {% comment %} <br>
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <!-- select -->
+                          <div class="form-group">
+                            <label>Choose user names to delete</label>
+                            <div class="select2-purple">
+                            <select class="form-control select2bs4 .select2-purple" multiple aria-placeholder="Select users" name="users">
+                              <option>delete  user 1</option>
+                              <option>delete  user 2</option>
+                              <option>delete  user 3</option>
+                              <option>delete  user 4</option>
+                            </select>    
+                          </div>                  
+                          </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-md-3"><button type="submit" class="btn btn-block btn-dark ">Delete</button></div>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer fixed">
+    <div class="float-right d-none d-sm-inline-block mb-3">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Select2 -->
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<script>
+    $(function(){
+      $('.select2bs4').select2({
+                  theme: 'bootstrap4'
+              });
+    })
+  </script>  
+</body>
+</html>

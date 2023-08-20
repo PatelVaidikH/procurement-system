@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommsLodge</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!--customecss-->
+  <link rel="stylesheet" href="{% static 'dist/css/customcss.css' %}">
+</head>
+<body>
+    {% comment %} <div class="user-panel mt-3 pb-3 mb-3 d-flex"></div> {% endcomment %} 
+    <li class="nav-item">
+      <a href="/addchatroom2" class="nav-link ">
+        <i class="nav-icon fas fa-solid fa-plus-square"></i>
+        <p>
+          Add Chat Room
+        </p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="/chatrooms_emp" class="nav-link ">
+        <i class="nav-icon fas fa-light fa-comment-dots"></i>
+        <p>
+          Chat Rooms
+        </p>
+      </a>
+    </li>
+
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+      <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+      <!-- overlayScrollbars -->
+    <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+      <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.js' %}"></script>
+      
+</body>
+

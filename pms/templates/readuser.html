@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommsLodge | User</title>
+
+  <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!--customecss-->
+  <link rel="stylesheet" href="{% static 'dist/css/customcss.css' %}">
+  <style>
+    textarea.form-control
+    {
+    resize:none;
+    }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-cyan navbar-dark">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/home" class="nav-link"><p>Home</p></a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/logout" class="nav-link">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/home" class="brand-link">
+      <img src="{% static 'dist/img/Commslodge.png' %}" alt="Comms-lodge Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">𝓒𝓞𝓜𝓜𝓢 𝓛𝓞𝓓𝓖𝓔</span>
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">  
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        
+        <div class="btn btn-block btn-flat">
+          <a href="/home/" class="d-block">{{showname}}</a>
+        </div>
+      </div>
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add iDascons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          {% comment %} <li class="nav-item menu-open">
+            <a href="/searchuser" class="nav-link ">
+              <i class="nav-icon fas fa-sharp fa-solid fa-users"></i>
+              <p>
+                User manager
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/searchcompany" class="nav-link ">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Company manager
+              </p>
+            </a>
+          </li> {% endcomment %}
+          {% include 'chatroom_sidebar.html' %}  
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">{{name}}</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active">User Manager</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <form action="/readuser/" method="" class="">
+          {% csrf_token %}
+           {% for user in users %}
+            <div class="card card-default">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <label for="">Company Name</label>
+                            <div class="input-group">
+                              {% if user.company_name %}
+                              <textarea class="form-control" rows="1" name="company_name" readonly>{{user.company_name}}</textarea>
+                              {% else %}
+                              <input type="text" class="form-control" name="company_name" value="" readonly>
+                              {% endif %}
+                            </div>
+                      </div>
+                    </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <label for="">User Full Name</label>
+                                <div class="input-group">
+                                  <textarea class="form-control" rows="1" name="user_full_name" readonly>{{user.user_full_name}}</textarea>
+                                </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                              <label for="">User Name</label>
+                                <div class="input-group">
+                                  <input type="text" class="form-control" name="user_name" value={{user.username}} readonly>
+                                </div>
+                          </div>
+                          <div class="col-md-6">
+                            <!-- select -->
+                            <div class="form-group">
+                              <label>User Type</label>
+                              <div class="input-group">
+                                <input type="text" class="form-control" name="user_type" value={{type}} readonly>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label for="">Contact No.</label>
+                                <div class="input-group">
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    {% if user.contact_number %}
+                                    <textarea class="form-control" rows="1" name="phone" readonly>{{user.contact_number}}</textarea>
+                                    {% else %}
+                                    <input type="text" class="form-control" data-inputmask='"mask": "9999999999"' name="phone" pattern="[0-9]{10}" value="" readonly>
+                                    {% endif %}
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label for="">User Email</label>
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                  </div>
+                                  <input type="email" class="form-control" name="email" value={{user.email}} readonly>
+                                </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12"><button type="reset" class="btn btn-block btn-dark"  onclick="window.open('/edituser','newwindow', 'width=550,height=700'); return false;">Edit details</button></div>
+                            </div>
+                        </div>
+                  </div>
+              </div>
+              {% endfor %}
+          </form>
+        </div><!-- /.container-fluid -->
+      </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer fixed">
+    <div class="float-right d-none d-sm-inline-block mb-3">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+</body>
+</html>

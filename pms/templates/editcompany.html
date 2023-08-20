@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommsLodge | Company</title>
+
+  <link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!--customecss-->
+  <link rel="stylesheet" href="{% static 'dist/css/customcss.css' %}">
+  <script>
+    function closewin() {
+        window.close()
+    }
+  </script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="col-sm-6">
+            <h1 class="m-0">Edit Company</h1>
+          </div><!-- /.col -->
+          
+          <form action="/editcompany/" method="POST" class="">
+          {% csrf_token %}
+          {% include 'messages.html' %}
+          {% for company in edit_com %}
+          {% comment %} {% for user in show_user %} {% endcomment %}
+            <div class="card card-default">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-12">
+                          <label for="">Company Name</label>
+                            <div class="input-group">
+                              <textarea class="form-control" rows="1" name="company_name">{{company.company_name}}</textarea>
+                            </div>
+                      </div>
+                    </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <label for="">Company Details</label>
+                                <div class="input-group">
+                                    <textarea class="form-control" rows="3" name="company_desc">{{company.company_desc}}</textarea>
+                                </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row">
+                      <div class="col-md-6"><button type="submit" class="btn btn-block btn-dark" onclick="#">Submit</button> 
+                        {% comment %} onclick="closewin()" {% endcomment %}
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              {% endfor %}
+          </form>
+        </div><!-- /.container-fluid -->
+      </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer fixed">
+    <div class="float-right d-none d-sm-inline-block mb-3">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<script>
+  $(function(){
+    var userDetailsTable = $('#userDetailsTable').DataTable({
+    responsive: true,
+    paging: false,
+    searching: false,
+    ordering: false,
+    info: false,
+    columnDefs: [],
+});
+  });
+</script>
+
+</body>
+</html>

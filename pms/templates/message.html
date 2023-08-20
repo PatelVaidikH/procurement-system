@@ -1,0 +1,23 @@
+{% if messages %}
+<center>
+
+    {% for message in messages %}
+    {% comment %} <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message }}
+</p> {% endcomment %}
+    {% if message.tags == "success" %}
+    <div class="messages" style="color: rgb(11, 183, 57);">
+        <h6{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message }}</h6>
+    {% endif %}
+
+    {% if message.tags == "error" %}
+    <div class="messages" style="color: rgb(249, 103, 103);">
+        <h6{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {{ message }}</h6>
+    {% endif %}
+
+    {% endfor %}
+</div>
+</center>
+{% endif %}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommsLodge | Chat Room</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!--customecss-->
+  <link rel="stylesheet" href="{% static 'dist/css/customcss.css' %}">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Preloader -->
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-cyan navbar-dark">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/home" class="nav-link">Home</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/logout" class="nav-link">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/home" class="brand-link">
+      <img src="{% static 'dist/img/Commslodge.png' %}" alt="CommsLodge Logo" class="brand-image img-circle elevation-4" style="opacity: .8">
+      <span class="brand-text font-weight-light">𝓒𝓞𝓜𝓜𝓢 𝓛𝓞𝓓𝓖𝓔</span>
+    </a>
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="btn btn-block btn-flat">
+          <a href="/home/" class="d-block">{{showname}}</a>
+        </div>
+      </div>
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add iDascons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          {% comment %} <li class="nav-item">
+            <a href="/payment/" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-money-check"></i>
+              <p>
+                Add payment details
+              </p>
+            </a>
+          </li>  {% endcomment %}
+          <li class="nav-item">
+            <a href="/payment" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-money-check"></i>
+              <p>
+                Add Payment Details
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link">
+              <form action="/chatrooms_client/" method="GET" id='select-room'>
+                <i class="nav-icon fas fa-solid fa-comments"></i> 
+                <label>Chat Rooms</label>
+                <select class="form-control select2bs4" name="chatroom" form="select-room" id='chatroom'>
+                  <option value="0" default>Select Rooms</option>
+                  {% comment %} <option value={{defid}} default>{{name}}</option> {% endcomment %}
+                  {% for room in rooms %}
+                    <option value={{room.id}}>{{room.name}}</option>
+                  {% endfor %}
+                  </select>
+                  <button type="submit" class="btn btn-info">
+                    <p>Go!</p>
+                  </button>
+              </form>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">{{name}}</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/home">Home</a></li>
+              <li class="breadcrumb-item active">{{name}}</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-primary direct-chat direct-chat-teal">
+                <div class="direct-chat-messages_1">
+                    {% for message in messages %}
+                    {% if message.username == user %}
+                    <div class="direct-chat-msg right">
+                      <div class="direct-chat-infos clearfix">
+                      <span class="direct-chat-name float-right">{{message.username}}</span>
+                      <span class="direct-chat-timestamp float-left">{{message.timestamp}}</span>
+                      </div>
+                      <div class="direct-chat-text">
+                        {{message.message}}
+                      </div>
+                    </div>
+                    {% else %}
+                    <div class="direct-chat-msg">
+                      <div class="direct-chat-infos clearfix">
+                          <span class="direct-chat-name float-left">{{message.username}}</span>
+                      <span class="direct-chat-timestamp float-right">{{message.timestamp}}</span>
+                      </div>
+                      <div class="direct-chat-text">
+                      {{message.message}}
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <div class="card-footer">
+                    <form action="/sendmessageclient/" method="post" id='message_send'>
+                      {% csrf_token %}
+                        <div class="input-group">
+                          <input type="hidden" name="selected-chatroom" value={{chatroomval}}>
+                          <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                          <span class="input-group-append">
+                            <button type="submit" class="btn btn-dark">Send</button>
+                          </span>
+                          </form>
+                          <form action="/paydetail/" id='pay_send'>
+                            {% csrf_token %}
+                            <span class="input-group-append">
+                              <button type="submit" class="btn btn-block btn-default" title="Send Payment details">
+                                <i class="nav-icon fas fa-duotone fa-credit-card fa-lg"></i>
+                              </button>
+                            </form>
+                          </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+                
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer fixed">
+    <div class="float-right d-none d-sm-inline-block mb-3 ">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+</body>
+</html>

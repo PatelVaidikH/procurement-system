@@ -1,0 +1,20 @@
+.text{
+    font-size: 120% !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+.navbarheads{
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 120% !important;
+}
+.direct-chat-messages_1{
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    height: 500px;
+    overflow: auto;
+    padding: 10px;
+}
+.w1{
+   width: 100px;
+   padding: 20%; 
+}
